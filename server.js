@@ -8,9 +8,17 @@ const app = express();
 app.use(cors());
 
 const httpServer = createServer(app);
+const allowedOrigins = [
+  'https://www.ggggame.store',
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:3002',
+  'http://localhost:3003'
+];
+
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CLIENT_URL || "*",
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
   }
 });
