@@ -78,6 +78,12 @@ io.on('connection', (socket) => {
     }
     socket.emit('joinedRoom', roomId);
   });
+
+  // 게임 시작 동기화
+  socket.on('startGameInRoom', (roomId) => {
+    console.log(`[room] ${socket.id} requested startGameInRoom for ${roomId}`);
+    io.to(roomId).emit('startGameInRoom');
+  });
 });
 
 httpServer.listen(PORT, () => {
