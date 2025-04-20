@@ -58,13 +58,6 @@ io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
   socket.on('disconnect', () => {
-    // 자신이 속한 모든 방에 대해 처리 (roomId가 6자리인 경우만)
-    for (const roomId of socket.rooms) {
-        if (roomId.length === 6) {
-          socket.to(roomId).emit('opponentLeft');
-        }
-      }
-    // 점수 관리 코드 (기존)
     for (const roomId in roomScores) {
       if (roomScores[roomId][socket.id] !== undefined) {
         delete roomScores[roomId][socket.id];
