@@ -90,6 +90,12 @@ io.on('connection', (socket) => {
     // 같은 방의 다른 소켓에게만 전달
     socket.to(roomId).emit('opponentScoreUpdate', score);
   });
+
+  // 게임 재시작 동기화
+  socket.on('restartGameInRoom', (roomId) => {
+    console.log(`[room] ${socket.id} requested restartGameInRoom for ${roomId}`);
+    io.to(roomId).emit('restartGameInRoom');
+  });
 });
 
 httpServer.listen(PORT, () => {
