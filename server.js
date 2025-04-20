@@ -32,6 +32,7 @@ require('./socket')(io);
 
 const PORT = process.env.PORT || 3000;
 
+// 기본 루트 라우트
 app.get('/', (req, res) => {
   res.send('Socket.io server is running');
 });
