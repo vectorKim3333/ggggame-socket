@@ -132,7 +132,18 @@ io.on('connection', (socket) => {
     }
     io.to(roomId).emit('restartGameInRoom');
   });
-  
+
+  // 썩은 사과 모드 실시간 동기화 이벤트
+  socket.on('rottenModeChanged', ({ roomId, rottenMode }) => {
+    const room = io.sockets.adapter.rooms.get(roomId);
+    if (!room) return;
+    for (const id of room) {
+      if (id !== socket.id) {
+        io.to(id).emit('rottenModeChanged', { rottenMode });
+      }
+    }
+  });
+
    // 썩은 사과 공격 이벤트
    socket.on('sendRottenApple', ({ roomId, count }) => {
     // 같은 방의 다른 유저에게만 전달
