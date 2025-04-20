@@ -7,6 +7,10 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
+// API 라우트 분리
+const apiRouter = require('./api');
+app.use(apiRouter);
+
 const httpServer = createServer(app);
 const allowedOrigins = [
   'https://www.ggggame.store',
@@ -22,6 +26,9 @@ const io = new Server(httpServer, {
     methods: ["GET", "POST"]
   }
 });
+
+// 소켓 이벤트 분리
+require('./socket')(io);
 
 const PORT = process.env.PORT || 3000;
 
