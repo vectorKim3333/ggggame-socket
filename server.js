@@ -132,6 +132,18 @@ io.on('connection', (socket) => {
     }
     io.to(roomId).emit('restartGameInRoom');
   });
+  
+   // 썩은 사과 공격 이벤트
+   socket.on('sendRottenApple', ({ roomId, count }) => {
+    // 같은 방의 다른 유저에게만 전달
+    const room = io.sockets.adapter.rooms.get(roomId);
+    if (!room) return;
+    for (const id of room) {
+      if (id !== socket.id) {
+        io.to(id).emit('receiveRottenApple', { count });
+      }
+    }
+  });
 });
 
 httpServer.listen(PORT, () => {
