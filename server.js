@@ -29,6 +29,10 @@ app.get('/', (req, res) => {
   res.send('Socket.io server is running');
 });
 
+app.get('/api/socket-url', (req, res) => {
+  res.json({ url: "https://ggggame-socket.onrender.com" });
+});
+
 // 랜덤 roomId 생성 함수
 function generateRoomId(length = 6) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
